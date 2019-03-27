@@ -2,7 +2,6 @@ task:
    name: MulticlassBabyTrain
    params:
       duration: 2.0      # sequences are 2s long
-      overlap: False     # Don't predict overlap FOR NOW
       batch_size: 64     # 64 sequences per batch
       per_epoch: 1       # one epoch = 1 day of audio
       weighted_loss: True # weight loss by 1/prior 
