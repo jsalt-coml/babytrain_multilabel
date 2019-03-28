@@ -6,7 +6,6 @@ task:
       per_epoch: 1       # one epoch = 1 day of audio
       weighted_loss: True # weight loss by 1/prior 
 
-
 data_augmentation:
    name: AddNoise                                   # add noise on-the-fly
    params:

@@ -11,11 +11,12 @@ The labels are :
 ## Installation
 
 
-First and foremost, make sure that the file `~/.pyannote/db.yml` contains these 2 lines :
+First and foremost, make sure that the file `~/.pyannote/database.yml` contains these 2 lines :
 
 ```bash
-MUSAN: /path/to/musan/{uri}.wav
-BabyTrain: /path/to/BabyTrain/*/wav/{uri}.wav
+Databases:
+  MUSAN: /path/to/musan/{uri}.wav
+  BabyTrain: /path/to/BabyTrain/*/wav/{uri}.wav
 ```
 
 Where `/path/to` needs to be replaced by the path to the folder containing the corpus.
@@ -35,6 +36,9 @@ git clone https://github.com/MarvinLvn/pyannote-db-template.git
 # Install the associated local python packages
 pip install -e ./pyannote-audio
 pip install -e ./pyannote-db-template
+
+# Get the protocol related to the MUSAN database
+pip install pyannote.db.musan
 ```
 
 ## Configuration
@@ -100,7 +104,7 @@ The following command will train the network using the training set of BabyTrain
 
 ```bash
 EXPERIMENT_DIR=babytrain/multilabels
-pyannote-multiclass-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} AMI.SpeakerDiarization.BB
+pyannote-multiclass-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerDiarization.BB
 ```
 
 This will create a bunch of files in TRAIN_DIR (defined below). One can follow along the training process using tensorboard.
