@@ -26,8 +26,8 @@ Then, we can install the needed dependencies :
 # Create conda environment
 conda create --name pyannote python=3.6
 source activate pyannote
-git clone something
-cd something
+git clone https://github.com/MarvinLvn/BabyTrain_multilabel.git
+cd BabyTrain_multilabel
 
 # Clone forked version of pyannote-audio and pyannote-db-template
 git clone https://github.com/MarvinLvn/pyannote-audio.git
@@ -36,9 +36,6 @@ git clone https://github.com/MarvinLvn/pyannote-db-template.git
 # Install the associated local python packages
 pip install -e ./pyannote-audio
 pip install -e ./pyannote-db-template
-
-# Get the protocol related to the MUSAN database
-pip install pyannote.db.musan
 ```
 
 ## Configuration
