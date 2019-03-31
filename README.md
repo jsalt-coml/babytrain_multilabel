@@ -36,6 +36,10 @@ git clone https://github.com/MarvinLvn/pyannote-db-template.git
 # Install the associated local python packages
 pip install -e ./pyannote-audio
 pip install -e ./pyannote-db-template
+
+# support Yaafe feature extraction (optional)
+$ conda install -c conda-forge yaafe
+
 ```
 
 ## Configuration
