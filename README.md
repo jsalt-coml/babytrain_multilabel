@@ -25,7 +25,7 @@ Then, we can install the needed dependencies :
 ```bash
 # Create conda environment
 conda create --name pyannote python=3.6
-source activate pyannote
+conda activate pyannote
 git clone https://github.com/MarvinLvn/BabyTrain_multilabel.git
 cd BabyTrain_multilabel
 
@@ -37,8 +37,12 @@ git clone https://github.com/MarvinLvn/pyannote-db-template.git
 pip install -e ./pyannote-audio
 pip install -e ./pyannote-db-template
 
+# tensorboard support (optional) 
+pip install tensorflow tensorboard
+
 # support Yaafe feature extraction (optional)
-$ conda install -c conda-forge yaafe
+conda install -c conda-forge yaafe
+
 
 ```
 
@@ -98,7 +102,7 @@ scheduler:
 
 You might want to change some of these parameters to see if performances improve.
 
-
+# Running the scripts (locally, or once you asked for an interactive session)
 ## Training
 
 The following command will train the network using the training set of BabyTrain database for 1000 epochs:
@@ -143,6 +147,40 @@ params:
 
 One can also use [tensorboard](https://github.com/tensorflow/tensorboard) to follow the validation process.
 
+# Submitting the jobs
+## Training
+
+Submit the script train.sh :
+
+```
+qsub train.sh
+```
+
+All the parameters for the submission appear at the beginning of **train.sh**
+
+## Validation
+
+Work in progress
+
+## Tensorboard
+
+Once you asked for an interactive session, by typing :
+
+```
+qlogin -l mem_free=1G,ram_free=1G,gpu=1 -l h_rt=1:00:00 -now no
+```
+
+you can run :
+
+```
+./run_tensorboard.sh
+```
+
+You will see an output like :
+
+```
+http://b16:6006
+```
 ## References
 
    - pyannote library
