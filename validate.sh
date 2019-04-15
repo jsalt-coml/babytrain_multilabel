@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+#$ -j y -o /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/validate_log.txt
+#$ -e /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/validate_err.txt
+#$ -M marvin.lavechin@ensimag.grenoble-inp.fr
+#$ -l mem_free=10G
+#$ -l ram_free=10G
+#$ -l gpu=1
+#$ -l "hostname=b1[12345678]*|c*"
+#$ -cwd
 
 CLASS=$1
 if [[ ! $CLASS =~ ^(KCHI|CHI|FEM|MAL|speech)$ ]]; then

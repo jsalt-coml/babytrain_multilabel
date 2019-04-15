@@ -19,7 +19,7 @@ Databases:
   BabyTrain: /path/to/BabyTrain/*/wav/{uri}.wav
 ```
 
-Where `/path/to` needs to be replaced by the path to the folder containing the corpus.
+Where `/path/to` needs to be replaced by the path to the folder containing the corpora.
 Then, we can install the needed dependencies : 
 
 ```bash
@@ -42,8 +42,6 @@ pip install tensorflow tensorboard
 
 # support Yaafe feature extraction (optional)
 conda install -c conda-forge yaafe
-
-
 ```
 
 ## Configuration
@@ -132,7 +130,8 @@ pyannote-multiclass-babytrain validate speech ${TRAIN_DIR} BabyTrain.SpeakerDiar
 In practice, it is tuning a simple speech activity detection pipeline (pyannote.audio.pipeline.speech_activity_detection.SpeechActivityDetection) for each speaker class, and after each epoch and stores the best hyper-parameter configuration on disk:
 
 ```bash
-cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerDiarization.BB/params.yml```
+cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerDiarization.BB/params.yml
+```
 
 ```yaml
 epoch: 280
@@ -145,7 +144,6 @@ params:
   pad_onset: 0.0
 ```
 
-One can also use [tensorboard](https://github.com/tensorflow/tensorboard) to follow the validation process.
 
 # Submitting the jobs
 ## Training
@@ -156,7 +154,7 @@ Submit the script train.sh :
 qsub train.sh
 ```
 
-All the parameters for the submission appear at the beginning of **train.sh**
+All the parameters for the submission to grid-engine appear at the beginning of **train.sh**
 
 ## Validation
 
@@ -164,22 +162,20 @@ Work in progress
 
 ## Tensorboard
 
-Once you asked for an interactive session, by typing :
+To use tensoboard, you will need to tunnel both login.clsp.jhu.edu and the node itself, from your local machine run :
 
-```
-qlogin -l mem_free=1G,ram_free=1G,gpu=1 -l h_rt=1:00:00 -now no
+```bash
+# Tunnel to login.clsp.jhu.edu
+ssh <username>@login.clsp.jhu.edu -L 1234:localhost:1234
+# Tunnel to the node c05
+ssh c05 -L 1234:localhost:1234
+
+cd BabyTrain_multilabel
+./run_tensorboard
 ```
 
-you can run :
+Then, go to **localhost:1234** in your favourite browser.
 
-```
-./run_tensorboard.sh
-```
-
-You will see an output like :
-
-```
-http://b16:6006
 ```
 ## References
 
