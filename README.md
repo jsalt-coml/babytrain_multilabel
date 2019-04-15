@@ -144,6 +144,7 @@ params:
   pad_onset: 0.0
 ```
 
+One can also use [tensorboard](https://github.com/tensorflow/tensorboard) to follow the validation process.
 
 # Submitting the jobs
 ## Training
@@ -158,7 +159,14 @@ All the parameters for the submission to grid-engine appear at the beginning of 
 
 ## Validation
 
-Work in progress
+Submit the script validate.sh :
+
+```
+qsub validate.sh KCHI
+```
+
+where the second parameter can be chosen in {KCHI, CHI, FEM, MAL, speech} depending on whether you want to evaluate
+the model on a specific class, or as a speech activity detection model.
 
 ## Tensorboard
 
