@@ -42,6 +42,14 @@ pip install tensorflow tensorboard
 
 # support Yaafe feature extraction (optional)
 conda install -c conda-forge yaafe
+
+# support Shennong feature extraction (optional)
+git clone https://github.com/bootphon/shennong.git
+cd ./shennong
+conda env update -n pyannote -f environment.yml
+make install
+make test
+
 ```
 
 ## Configuration
