@@ -18,4 +18,4 @@ source activate pyannote
 SCRIPT_DIR=$HOME/Bureau/BabyTrain_multilabel # Can't use $dirname $0 visibly (because of the way grid-engine manages scripts)
 export EXPERIMENT_DIR=${SCRIPT_DIR}/babytrain/multilabel
 export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerDiarization.BB.train
-pyannote-multiclass-babytrain validate --gpu $CLASS ${TRAIN_DIR} BabyTrain.SpeakerDiarization.BB
+pyannote-multiclass-babytrain validate $CLASS ${TRAIN_DIR} BabyTrain.SpeakerDiarization.BB --every 5 --gpu
