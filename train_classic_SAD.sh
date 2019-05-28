@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 #$ -j y -o /home/lmarvin/BabyTrain_multilabel/babytrain/classic_sad/log.txt
 #$ -e /home/lmarvin/BabyTrain_multilabel/babytrain/classic_sad/err.txt
-#$ -M marvin.lavechin@ensimag.grenoble-inp.fr
-#$ -l mem_free=10G
-#$ -l ram_free=10G
+#$ -l mem_free=16G
+#$ -l ram_free=16G
 #$ -l gpu=1
 #$ -l "hostname=b1[12345678]*|c*"
 #$ -cwd

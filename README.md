@@ -57,7 +57,7 @@ make test
 To ensure reproducibility, `pyannote-multiclass-babytrain` relies on a configuration file defining the experimental setup:
 
 ```bash
-cat babytrain/multilabels/config.yml
+cat babytrain/multilabel/config.yml
 ```
 
 ```yaml
@@ -114,7 +114,7 @@ You might want to change some of these parameters to see if performances improve
 The following command will train the network using the training set of BabyTrain database for 1000 epochs:
 
 ```bash
-EXPERIMENT_DIR=babytrain/multilabels
+EXPERIMENT_DIR=babytrain/multilabel
 pyannote-multiclass-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerDiarization.BB
 ```
 
@@ -175,6 +175,15 @@ qsub validate.sh KCHI
 
 where the second parameter can be chosen in {KCHI, CHI, FEM, MAL, speech} depending on whether you want to evaluate
 the model on a specific class, or as a speech activity detection model.
+
+## Application
+
+Now that we know how the model is doing, we can apply it on all files of the BabyTrain test set and store raw scores in /path/to/sad
+
+```
+pyannote-multiclass-babytrain apply ${TRAIN_DIR}/weights/0060.pt BabyTrain.SpeakerDiarization.BB ${EXPERIMENT_DIR}/test_sad
+```
+
 
 ## Tensorboard
 

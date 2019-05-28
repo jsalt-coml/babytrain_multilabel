@@ -1,7 +1,6 @@
 #!/bin/bash
 #$ -j y -o /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/log.txt
 #$ -e /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/err.txt
-#$ -M marvin.lavechin@ensimag.grenoble-inp.fr
 #$ -l mem_free=10G
 #$ -l ram_free=10G
 #$ -l gpu=1
