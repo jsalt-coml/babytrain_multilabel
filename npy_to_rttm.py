@@ -3,7 +3,14 @@ import os, glob
 import numpy as np
 import yaml
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="Given :\n"
+                                             "1) a directory where a model has been trained, validated and applied\n"
+                                             "2) the directory where the raw scores of the application step have been stored (.npy files)\n"
+                                             "3) a predicting mode (speech, or talker role)"
+                                             "4) the frame step used for generating the features" 
+                                             "Genarates .rttm files whose labels have been determined based on the tresholds computed" 
+                                             "in the development phase.")
+
 parser.add_argument("--exp", help="The experiment directory where the model has been trained, validated and applied.",
                     type=str, required=True)
 parser.add_argument("--scores", help="The directory where the scores are stored (.npy files).",
