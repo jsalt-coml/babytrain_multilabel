@@ -3,12 +3,14 @@ import os, glob
 import numpy as np
 import yaml
 
+# Use case : python npy_to_rttm.py --exp ${EXPERIMENT_DIR} --scores ${EXPERIMENT_DIR}/test_sad/BabyTrain --mode speech
+
 parser = argparse.ArgumentParser(description="Given :\n"
                                              "1) a directory where a model has been trained, validated and applied\n"
                                              "2) the directory where the raw scores of the application step have been stored (.npy files)\n"
                                              "3) a predicting mode (speech, or talker role)"
                                              "4) the frame step used for generating the features" 
-                                             "Genarates .rttm files whose labels have been determined based on the tresholds computed" 
+                                             "Generates .rttm files whose labels have been determined based on the tresholds computed" 
                                              "in the development phase.")
 
 parser.add_argument("--exp", help="The experiment directory where the model has been trained, validated and applied.",
@@ -44,18 +46,22 @@ labels = np.asarray(["CHI", "FEM", "KCHI", "MAL"]) # numpy array for being able
 if args.mode == "speech":
     params = yaml.load(open(os.path.join(validation_dir, "validate_speech",
                                     "BabyTrain.SpeakerDiarization.BB.development",
-                                    "params.yml")))
+                                    "params.yml")), Loader=yaml.FullLoader)
     treshold = params["params"]["offset"]
 elif args.mode == "role":
     treshold = []
     for label in labels:
         params = yaml.load(os.path.join(validation_dir, "validate_%s" % label,
                                         "BabyTrain.SpeakerDiarization.BB.development",
-                                        "params.yml"))
+                                        "params.yml"), Loader=yaml.FullLoader)
         treshold.append(params["params"]["offset"])
 
 # Read scores
-npy_files = glob.iglob(os.path.join(args.scores, "*.npy"))
+npy_files = glob.glob(os.path.join(args.scores, "*.npy"))
+
+if len(list(npy_files)) == 0:
+    print("No .npy files have been found.")
+
 for npy in npy_files:
     output_file = npy.replace(".npy", "_%s.rttm" % args.mode)
     basename = os.path.basename(output_file).replace(".rttm", "")
