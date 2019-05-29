@@ -1,7 +1,7 @@
 # Multi-label classifier with `pyannote-audio`
 
 Train, validate and apply a multi-label classifier based on MFCCs and LSTMs, using 
-`pyannote-multiclass-babytrain` command line tool.
+`pyannote-multilabel-babytrain` command line tool.
 The labels are :
 - KCHI (key children speech utterances)
 - CHI (other children speech utterances)
@@ -54,7 +54,7 @@ make test
 
 ## Configuration
 
-To ensure reproducibility, `pyannote-multiclass-babytrain` relies on a configuration file defining the experimental setup:
+To ensure reproducibility, `pyannote-multilabel-babytrain` relies on a configuration file defining the experimental setup:
 
 ```bash
 cat babytrain/multilabel/config.yml
@@ -115,7 +115,7 @@ The following command will train the network using the training set of BabyTrain
 
 ```bash
 EXPERIMENT_DIR=babytrain/multilabel
-pyannote-multiclass-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerDiarization.BB
+pyannote-multilabel-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerRole.JSALT
 ```
 
 This will create a bunch of files in TRAIN_DIR (defined below). One can follow along the training process using tensorboard.
@@ -131,14 +131,14 @@ To get a quick idea of how the network is doing during training, one can use the
 It can (should!) be run in parallel to training and evaluates the model epoch after epoch.
 
 ```bash
-export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerDiarization.BB.train
-pyannote-multiclass-babytrain validate speech ${TRAIN_DIR} BabyTrain.SpeakerDiarization.BB
+export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerRole.JSALT.train
+pyannote-multilabel-babytrain validate speech ${TRAIN_DIR} BabyTrain.SpeakerRole.JSALT
 ```
 
 In practice, it is tuning a simple speech activity detection pipeline (pyannote.audio.pipeline.speech_activity_detection.SpeechActivityDetection) for each speaker class, and after each epoch and stores the best hyper-parameter configuration on disk:
 
 ```bash
-cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerDiarization.BB/params.yml
+cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerRole.JSALT/params.yml
 ```
 
 ```yaml
@@ -181,7 +181,7 @@ the model on a specific class, or as a speech activity detection model.
 Now that we know how the model is doing, we can apply it on all files of the BabyTrain test set and store raw scores in /path/to/sad
 
 ```
-pyannote-multiclass-babytrain apply ${TRAIN_DIR}/weights/0060.pt BabyTrain.SpeakerDiarization.BB ${EXPERIMENT_DIR}/test_sad
+pyannote-multilabel-babytrain apply ${TRAIN_DIR}/weights/0060.pt BabyTrain.SpeakerRole.JSALT ${EXPERIMENT_DIR}/test_sad
 ```
 
 

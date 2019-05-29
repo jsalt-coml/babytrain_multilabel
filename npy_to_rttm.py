@@ -25,7 +25,7 @@ parser.add_argument("--step", help="Size of a frame (in s, default to 0.01 ms)",
 args = parser.parse_args()
 
 train_dir = os.path.join(args.exp, "train")
-validation_dir = os.path.join(args.exp, "train", "BabyTrain.SpeakerDiarization.BB.train", "weights")
+validation_dir = os.path.join(args.exp, "train", "BabyTrain.SpeakerRole.JSALT.train", "weights")
 
 if not os.path.isdir(args.exp):
     raise ValueError("The experiment directory you specified doesn't exist.")
@@ -45,14 +45,14 @@ labels = np.asarray(["CHI", "FEM", "KCHI", "MAL"]) # numpy array for being able
 # Read tresholds
 if args.mode == "speech":
     params = yaml.load(open(os.path.join(validation_dir, "validate_speech",
-                                    "BabyTrain.SpeakerDiarization.BB.development",
+                                    "BabyTrain.SpeakerRole.JSALT.development",
                                     "params.yml")), Loader=yaml.FullLoader)
     treshold = params["params"]["offset"]
 elif args.mode == "role":
     treshold = []
     for label in labels:
         params = yaml.load(os.path.join(validation_dir, "validate_%s" % label,
-                                        "BabyTrain.SpeakerDiarization.BB.development",
+                                        "BabyTrain.SpeakerRole.JSALT.development",
                                         "params.yml"), Loader=yaml.FullLoader)
         treshold.append(params["params"]["offset"])
 

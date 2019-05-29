@@ -14,4 +14,4 @@ echo "Found GPU : $CUDA_VISIBLE_DEVICES"
 source activate pyannote
 SCRIPT_DIR=$HOME/BabyTrain_multilabel # Can't use $dirname $0 visibly (because of the way grid-engine manages scripts)
 export EXPERIMENT_DIR=${SCRIPT_DIR}/babytrain/multilabel
-pyannote-multiclass-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerDiarization.BB
+pyannote-multilabel-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerRole.JSALT
