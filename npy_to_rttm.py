@@ -21,7 +21,7 @@ parser.add_argument("--mode", choices=["speech", "role"], help="In mode speech, 
                                                                "the speech uterrances. In the role mode, it gives KCHI,CHI,FEM,MAL labels",
                     type=str, required=True)
 parser.add_argument("--step", help="Size of a frame (in s, default to 0.01 ms)",
-                    type=float, default=0.01)
+                    type=float, default=0.01) # that one could be read in config.yml though
 args = parser.parse_args()
 
 train_dir = os.path.join(args.exp, "train")
