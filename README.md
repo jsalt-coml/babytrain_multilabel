@@ -62,7 +62,7 @@ cat babytrain/multilabel/config.yml
 
 ```yaml
 task:
-   name: MulticlassBabyTrain
+   name: MultilabelBabyTrain
    params:
       duration: 2.0      # sequences are 2s long
       batch_size: 64     # 64 sequences per batch
