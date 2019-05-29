@@ -31,11 +31,11 @@ cd BabyTrain_multilabel
 
 # Clone forked version of pyannote-audio and pyannote-db-template
 git clone https://github.com/MarvinLvn/pyannote-audio.git
-git clone https://github.com/MarvinLvn/pyannote-db-template.git
+git clone https://github.com/MarvinLvn/pyannote-db-babytrain.git
 
 # Install the associated local python packages
 pip install -e ./pyannote-audio
-pip install -e ./pyannote-db-template
+pip install -e ./pyannote-db-babytrain
 
 # tensorboard support (optional) 
 pip install tensorflow tensorboard
