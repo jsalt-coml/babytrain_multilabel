@@ -154,6 +154,37 @@ params:
 
 One can also use [tensorboard](https://github.com/tensorflow/tensorboard) to follow the validation process.
 
+## Test
+
+Once the thresholds have been computed in the validation step, we can apply our model on the test test :
+
+```
+export VALIDATE_DIR=${TRAIN_DIR}/validate_speech
+export OUTPUT_DIR=my_sad_output
+./apply_and_evaluate.sh $VALIDATE_DIR $OUTPUT_DIR
+```
+
+This script will produce the raw scores in the $OUTPUT_DIR folder, then it will create the .rttm by applying the thresholds on these scores.
+Finally, it will compute the detection error rate by using pyannote-metrics.
+Based on which task (speech, KCHI, CHI, FEM or MAL) the model has been optimized for, the model will predict only the relevant class. 
+
+
+## Tensorboard
+
+To use tensoboard, you will need to tunnel both login.clsp.jhu.edu and the node itself, from your local machine run :
+
+```bash
+# Tunnel to login.clsp.jhu.edu
+ssh <username>@login.clsp.jhu.edu -L 1234:localhost:1234
+# Tunnel to the node c05
+ssh c05 -L 1234:localhost:1234
+
+cd BabyTrain_multilabel
+./run_tensorboard
+```
+
+Then, go to **localhost:1234** in your favourite browser.
+
 # Submitting the jobs
 ## Training
 
@@ -176,32 +207,6 @@ qsub validate.sh KCHI
 where the second parameter can be chosen in {KCHI, CHI, FEM, MAL, speech} depending on whether you want to evaluate
 the model on a specific class, or as a speech activity detection model.
 
-## Application
-
-Now that we know how the model is doing, we can apply it on all files of the BabyTrain test set and store raw scores in /path/to/sad
-
-```
-pyannote-multilabel-babytrain apply ${TRAIN_DIR}/weights/0060.pt BabyTrain.SpeakerRole.JSALT ${EXPERIMENT_DIR}/test_sad
-```
-
-
-## Tensorboard
-
-To use tensoboard, you will need to tunnel both login.clsp.jhu.edu and the node itself, from your local machine run :
-
-```bash
-# Tunnel to login.clsp.jhu.edu
-ssh <username>@login.clsp.jhu.edu -L 1234:localhost:1234
-# Tunnel to the node c05
-ssh c05 -L 1234:localhost:1234
-
-cd BabyTrain_multilabel
-./run_tensorboard
-```
-
-Then, go to **localhost:1234** in your favourite browser.
-
-```
 ## References
 
    - pyannote library
