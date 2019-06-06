@@ -11,7 +11,7 @@ The labels are :
 ## Installation
 
 
-First and foremost, make sure that the file `~/.pyannote/database.yml` contains these 2 lines :
+First and foremost, make sure that the file `~/.pyannote/database.yml` contains these 2 lines (if running your experiments on the CLSP cluster) :
 
 ```bash
 Databases:
@@ -200,8 +200,10 @@ ssh <username>@login.clsp.jhu.edu -L 1234:localhost:1234
 # Tunnel to the node c05
 ssh c05 -L 1234:localhost:1234
 
+# Run tensorboard session
 cd BabyTrain_multilabel
-./run_tensorboard
+source activate pyannote
+tensorboard --logdir=babytrain/multilabel
 ```
 
 Then, go to **localhost:1234** in your favourite browser.
