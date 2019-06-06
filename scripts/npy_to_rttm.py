@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import os, glob
 import numpy as np
@@ -27,7 +29,8 @@ validation_dir = args.val
 if not os.path.isdir(os.path.join(validation_dir)):
     raise ValueError("The model hasn't been validated yet. The directory %s can't be found." % validation_dir)
 
-folder_name = os.path.basename(validation_dir)
+# Take abspath to avoid error if path is entered with trailing "/"
+folder_name = os.path.abspath(os.path.basename(validation_dir))
 if "KCHI" in folder_name:
     print("Extracting key-child speech.")
     mode = "KCHI"
