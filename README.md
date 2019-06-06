@@ -15,8 +15,24 @@ First and foremost, make sure that the file `~/.pyannote/database.yml` contains 
 
 ```bash
 Databases:
-  MUSAN: /path/to/musan/{uri}.wav
-  BabyTrain: /path/to/BabyTrain/*/wav/{uri}.wav
+      MUSAN: /export/fs01/jsalt19/databases/auxiliary/musan/{uri}.wav
+      BabyTrain: /export/fs01/jsalt19/databases/BabyTrain/*/wav/{uri}.wav
+      CHIME5: /export/fs01/jsalt19/databases/CHiME5/*/wav/{uri}.wav
+      AMI: /export/fs01/jsalt19/databases/AMI/*/wav/{uri}.wav
+
+Protocols:
+  X:
+    SpeakerRole:
+      JSALT:
+        train:
+          BabyTrain.SpeakerRole.JSALT: [train]
+          AMI.SpeakerRole.JSALT: [train]
+        development:
+          BabyTrain.SpeakerRole.JSALT: [development]
+          AMI.SpeakerRole.JSALT: [development]
+        test:
+          BabyTrain.SpeakerRole.JSALT: [test]
+          AMI.SpeakerRole.JSALT: [test]
 ```
 
 Where `/path/to` needs to be replaced by the path to the folder containing the corpora.
@@ -32,10 +48,15 @@ cd BabyTrain_multilabel
 # Clone forked version of pyannote-audio and pyannote-db-template
 git clone https://github.com/MarvinLvn/pyannote-audio.git
 git clone https://github.com/MarvinLvn/pyannote-db-babytrain.git
+git clone https://github.com/MarvinLvn/pyannote-db-ami.git
+git clone https://github.com/MarvinLvn/pyannote-db-chime5.git
 
 # Install the associated local python packages
 pip install -e ./pyannote-audio
 pip install -e ./pyannote-db-babytrain
+pip install -e ./pyannote-db-ami
+pip install -e ./pyannote-db-chime5
+
 
 # tensorboard support (optional) 
 pip install tensorflow tensorboard
