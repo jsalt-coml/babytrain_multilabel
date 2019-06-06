@@ -11,7 +11,7 @@ The labels are :
 ## Installation
 
 
-First and foremost, make sure that the file `~/.pyannote/database.yml` contains these 2 lines (if running your experiments on the CLSP cluster) :
+First and foremost, make sure that the file `~/.pyannote/database.yml` contains these lines (if running your experiments on the CLSP cluster) :
 
 ```bash
 Databases:
@@ -42,14 +42,14 @@ Then, we can install the needed dependencies :
 # Create conda environment
 conda create --name pyannote python=3.6
 conda activate pyannote
-git clone https://github.com/MarvinLvn/BabyTrain_multilabel.git
+git clone https://github.com/jsalt-coml/babytrain_multilabel.git
 cd BabyTrain_multilabel
 
 # Clone forked version of pyannote-audio and pyannote-db-template
-git clone https://github.com/MarvinLvn/pyannote-audio.git
-git clone https://github.com/MarvinLvn/pyannote-db-babytrain.git
-git clone https://github.com/MarvinLvn/pyannote-db-ami.git
-git clone https://github.com/MarvinLvn/pyannote-db-chime5.git
+git clone https://github.com/jsalt-coml/pyannote-audio.git
+git clone https://github.com/jsalt-coml/pyannote-db-babytrain.git
+git clone https://github.com/jsalt-coml/pyannote-db-ami.git
+git clone https://github.com/jsalt-coml/pyannote-db-chime5.git
 
 # Install the associated local python packages
 pip install -e ./pyannote-audio
