@@ -17,9 +17,15 @@ parser = argparse.ArgumentParser(description="Given :\n"
                                              "Generates .rttm files whose labels have been determined based on the tresholds computed" 
                                              "in the development phase.")
 
-parser.add_argument("--val", help="The experiment directory where the model has been validated",
+parser.add_argument("--val",
+                    help="""The experiment directory where the model """
+                         """has been validated""",
                     type=str, required=True)
-parser.add_argument("--scores", help="The directory where the scores are stored (.npy files).",
+parser.add_argument("--protocol",
+                    help="The name of the protocol on which the test was run")
+parser.add_argument("--scores",
+                    help="""The directory where the scores"""
+                    """ are stored (.npy files).""",
                     type=str, required=True)
 parser.add_argument("--step", help="Size of a frame (in s, default to 0.01 ms)",
                     type=float, default=0.01) # that one could be read in config.yml though
@@ -27,10 +33,13 @@ args = parser.parse_args()
 
 validation_dir = args.val
 if not os.path.isdir(os.path.join(validation_dir)):
-    raise ValueError("The model hasn't been validated yet. The directory %s can't be found." % validation_dir)
+    raise ValueError("""The model hasn't been validated yet."""
+                     """The directory %s can't be found.""" % validation_dir)
 
-# Take abspath to avoid error if path is entered with trailing "/"
-folder_name = os.path.abspath(os.path.basename(validation_dir))
+# Get name of label on which validation was run
+## Take abspath first, because if validation_dir ends with trailing "/"
+## the basename will be ""...
+folder_name = os.path.basename(os.path.abspath(validation_dir))
 if "KCHI" in folder_name:
     print("Extracting key-child speech.")
     mode = "KCHI"
@@ -48,13 +57,16 @@ elif "speech" in folder_name:
     mode = "speech"
 else:
     raise ValueError("Can't decide what label needs to be predicted : "
-                     "%s should contain one of the following [KCHI,CHI,FEM,MAL,speech]" % folder_name)
+                     "%s should contain one of the following "
+                     "[KCHI,CHI,FEM,MAL,speech]" % folder_name)
 
-
-labels = np.asarray(["CHI", "FEM", "KCHI", "MAL"]) # numpy array for being able to index by list of indices
+# numpy array for being able to index by list of indices
+labels = np.asarray(["CHI", "FEM", "KCHI", "MAL"])
 
 # Read treshold
-params = yaml.load(open(os.path.join(validation_dir, "BabyTrain.SpeakerRole.JSALT.development", "params.yml")),
+params = yaml.load(open(os.path.join(validation_dir,
+                        "{}.development".format(args.protocol),
+                        "params.yml")),
                    Loader=yaml.FullLoader)
 treshold = params["params"]["offset"]
 
@@ -77,8 +89,8 @@ for npy in npy_files:
 
     is_speech = speech_scores > treshold
     is_speech = np.hstack([False, is_speech, False]) # Useful for boundaries
-    # Starts are the ones whose previous element is False, and curr element is True
-    # Same principles for ends
+    # Starts are the ones whose previous element is False, and curr element is
+    # True. Same principles for ends
     starts = (~is_speech[:-1] & is_speech[1:]).nonzero()
     ends = (is_speech[:-1] & ~is_speech[1:]).nonzero()
 
@@ -86,6 +98,8 @@ for npy in npy_files:
         for start, end in zip(starts[0], ends[0]):
             start_s = start * args.step
             duration_s = (end - start) * args.step
-            f.write('SPEAKER %s\t1\t%.3f\t%.3f\t<NA>\t<NA>\t%s\t<NA>\t<NA>\n' % \
-                    (basename, start_s, duration_s, mode))
+            f.write("""SPEAKER %s\t1\t%.3f\t%.3f"""
+                    """\t<NA>\t<NA>\t%s\t<NA>\t<NA>\n""" % (basename,
+                                                            start_s, duration_s,
+                                                            mode))
 
