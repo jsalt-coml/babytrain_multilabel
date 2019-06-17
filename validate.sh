@@ -8,19 +8,36 @@
 #$ -l "hostname=b1[12345678]*|c*"
 #$ -cwd
 
-if [ $# -ne 3 ]; then
+if [ $# -le 3 ]; then
     echo "Usage :"
-    echo "./apply_and_evaluate.sh <experiment_dir> <protocol_name>"
+    echo "./validate.sh <CLASS> <experiment_dir> <protocol> <OPTIONAL protocol_train> <OPTION precision>"
+    echo "<CLASS> needs to be in [KCHI, CHI, FEM, MAL, speech]"
+    echo "<protocol> is the protocol on which the model will be validating"
+    echo "<protocol_train> is the name of the protocol on which the model was trained (if not specified, assuming it's the same one as <protocol>)"
+    echo "<precision> specifies the fixed precision for validation. If not specified, assumes 0.8"
     echo "Example :"
     echo "export EXPERIMENT_DIR=babytrain/multilabel"
-    echo "export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerRole.JSALT.train"
-    echo "sbatch validate.sh ${EXPERIMENT_DIR} BabyTrain.SpeakerRole.JSALT speech"
+    echo "sbatch validate.sh speech ${EXPERIMENT_DIR} BabyTrain.SpeakerRole.JSALT X.SpeakerRole.JSALT 0.5"
     exit
 fi
 
-TRAIN_DIR=$1
-PROTOCOL_NAME=$2
-CLASS=$3
+
+CLASS=$1
+experiment_dir=$2
+protocol=$3
+protocol_train=$4
+precision=$5
+
+# if no protocol_train given, assume the validation protocol is the same as the one used for training
+if [[ ! $protocol_train ]]; then
+    echo "assuming you're validating on same protocol as train..."
+    protocol_train=$protocol;
+fi
+
+# if no precision, use 0.8
+if [[ ! $precision ]]; then
+    $precision=0.8
+fi
 
 if [[ ! $CLASS =~ ^(KCHI|CHI|FEM|MAL|speech)$ ]]; then
     echo "The first parameter must belong to [KCHI,CHI,FEM,MAL,speech]."
@@ -28,4 +45,10 @@ if [[ ! $CLASS =~ ^(KCHI|CHI|FEM|MAL|speech)$ ]]; then
 fi
 
 source activate pyannote
-pyannote-multilabel-babytrain validate $CLASS ${TRAIN_DIR} ${PROTOCOL_NAME} --every 5 --gpu
+export EXPERIMENT_DIR=$experiment_dir
+export TRAIN_DIR=${EXPERIMENT_DIR}/train/${protocol_train}.train
+
+# copy database.yml in output folder to keep trace of what was used when launching the experiment
+mkdir -p $TRAIN_DIR/validate_$CLASS
+cp -r /home/$USER/.pyannote/database.yml $TRAIN_DIR/validate_$CLASS/
+pyannote-multilabel-babytrain validate --gpu --precision=$precision --to=100 --every=5 $CLASS ${TRAIN_DIR} $protocol
