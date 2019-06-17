@@ -9,19 +9,22 @@
 
 if [ $# -ne 2 ]; then
     echo "Usage :"
-    echo "./apply_and_evaluate.sh <experiment_dir> <protocol_name>"
+    echo "./train.sh <experiment_dir> <protocol_name>"
     echo "Example : "
     echo "export EXPERIMENT_DIR=babytrain/multilabel"
     echo "sbatch train.sh ${EXPERIMENT_DIR} BabyTrain.SpeakerRole.JSALT"
     exit
 fi
 
-EXPERIMENT_DIR=$1
-PROTOCOL_NAME=$2
+experiment_dir=$1
+protocol=$2
 
-echo "Began at $(date)"
-export CUDA_VISIBLE_DEVICES=`free-gpu`
-echo "Found GPU : $CUDA_VISIBLE_DEVICES"
+export EXPERIMENT_DIR=$experiment_dir
 
-source activate pyannote
-pyannote-multilabel-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} ${PROTOCOL_NAME}
+# activate conda environment
+conda activate pyannote
+
+# copy database.yml in experiment folder to keep log of everything
+mkdir -p $EXPERIMENT_DIR/train/${protocol}.train
+cp -r /home/jkaradayi/.pyannote/database.yml $EXPERIMENT_DIR/train/${protocol}.train
+pyannote-multilabel-babytrain train --gpu --to=100 ${EXPERIMENT_DIR} $protocol
