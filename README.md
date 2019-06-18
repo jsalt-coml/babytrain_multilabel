@@ -29,7 +29,7 @@ Protocols:
           annotated: /export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.uem
   BabyTrain:
     SpeakerDiarization:
-      JSALT:
+      All:
         train:
           annotation: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.rttm
           annotated: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.uem
@@ -65,13 +65,13 @@ Protocols:
     SpeakerDiarization:
       JSALT:
         train:
-          BabyTrain.SpeakerDiarization.JSALT: [train]
+          BabyTrain.SpeakerDiarization.All: [train]
           AMI.SpeakerDiarization.JSALT: [train]
         dev:
-          BabyTrain.SpeakerDiarization.JSALT: [development]
+          BabyTrain.SpeakerDiarization.All: [development]
           AMI.SpeakerDiarization.JSALT: [development]
         test:
-          BabyTrain.SpeakerDiarization.JSALT: [test]
+          BabyTrain.SpeakerDiarization.All: [test]
           AMI.SpeakerDiarization.JSALT: [test]
 ```
 
@@ -167,7 +167,7 @@ The following command will train the network using the training set of BabyTrain
 
 ```bash
 export EXPERIMENT_DIR=babytrain/multilabel
-pyannote-multilabel train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerDiarization.JSALT
+pyannote-multilabel train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerDiarization.All
 ```
 
 This will create a bunch of files in TRAIN_DIR (defined below). One can follow along the training process using tensorboard.
@@ -183,14 +183,14 @@ To get a quick idea of how the network is doing during training, one can use the
 It can (should!) be run in parallel to training and evaluates the model epoch after epoch.
 
 ```bash
-export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerDiarization.JSALT.train
-pyannote-multilabel validate speech ${TRAIN_DIR} BabyTrain.SpeakerDiarization.JSALT
+export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerDiarization.All.train
+pyannote-multilabel validate speech ${TRAIN_DIR} BabyTrain.SpeakerDiarization.All
 ```
 
 In practice, it is tuning a simple speech activity detection pipeline (pyannote.audio.pipeline.speech_activity_detection.SpeechActivityDetection) for each speaker class, and after each epoch and stores the best hyper-parameter configuration on disk:
 
 ```bash
-cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerDiarization.JSALT/params.yml
+cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerDiarization.All/params.yml
 ```
 
 ```yaml
