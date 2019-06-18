@@ -19,6 +19,10 @@ fi
 experiment_dir=$1
 protocol=$2
 
+echo "Began at $(date)"
+export CUDA_VISIBLE_DEVICES=`free-gpu`
+echo "Found GPU : $CUDA_VISIBLE_DEVICES"
+
 export EXPERIMENT_DIR=$experiment_dir
 
 # activate conda environment
