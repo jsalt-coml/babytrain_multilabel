@@ -8,7 +8,7 @@
 #$ -l "hostname=b1[12345678]*|c*"
 #$ -cwd
 
-if [ $# -le 3 ]; then
+if [ $# -le 2 ]; then
     echo "Usage :"
     echo "./validate.sh <CLASS> <experiment_dir> <protocol> <OPTIONAL protocol_train> <OPTION precision>"
     echo "<CLASS> needs to be in [KCHI, CHI, FEM, MAL, speech]"
@@ -36,7 +36,7 @@ fi
 
 # if no precision, use 0.8
 if [[ ! $precision ]]; then
-    $precision=0.8
+    precision=0.8
 fi
 
 if [[ ! $CLASS =~ ^(KCHI|CHI|FEM|MAL|speech)$ ]]; then
