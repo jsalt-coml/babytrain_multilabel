@@ -19,45 +19,45 @@ Protocols:
     SpeakerDiarization:
       MixHeadset:
         train:
-          annotation:/export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.rttm
-          annotated:/export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.uem
+          annotation: /export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.rttm
+          annotated: /export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.uem
         dev:
-          annotation:/export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.rttm
-          annotated:/export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.uem
+          annotation: /export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.rttm
+          annotated: /export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.uem
         test:
-          annotation:/export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.rttm
-          annotated:/export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.uem
+          annotation: /export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.rttm
+          annotated: /export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.uem
   BabyTrain:
     SpeakerDiarization:
       JSALT:
         train:
-          annotation:/export/fs01/jsalt19/databases/BabyTrain/train/all_train.rttm
-          annotated:/export/fs01/jsalt19/databases/BabyTrain/train/all_train.uem
+          annotation: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.rttm
+          annotated: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.uem
         dev:
-          annotation:/export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.rttm
-          annotated:/export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.uem
+          annotation: /export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.rttm
+          annotated: /export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.uem
         test:
-          annotation:/export/fs01/jsalt19/databases/BabyTrain/test/all_test.rttm
-          annotated:/export/fs01/jsalt19/databases/BabyTrain/test/all_test.uem
+          annotation: /export/fs01/jsalt19/databases/BabyTrain/test/all_test.rttm
+          annotated: /export/fs01/jsalt19/databases/BabyTrain/test/all_test.uem
   CHiME5:
     SpeakerDiarization:
       U01:
         train:
-          annotation:/export/fs01/jsalt19/databases/CHiME5/train/allU01_train.rttm
-          annotated:/export/fs01/jsalt19/databases/CHiME5/train/allU01_train.uem
+          annotation: /export/fs01/jsalt19/databases/CHiME5/train/allU01_train.rttm
+          annotated: /export/fs01/jsalt19/databases/CHiME5/train/allU01_train.uem
         dev:
-          annotation:/export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.rttm
-          annotated:/export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.uem
+          annotation: /export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.rttm
+          annotated: /export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.uem
         test:
-          annotation:/export/fs01/jsalt19/databases/CHiME5/test/allU01_test.rttm
-          annotated:/export/fs01/jsalt19/databases/CHiME5/test/allU01_test.uem
+          annotation: /export/fs01/jsalt19/databases/CHiME5/test/allU01_test.rttm
+          annotated: /export/fs01/jsalt19/databases/CHiME5/test/allU01_test.uem
 
 Databases:
-  AMI:/export/fs01/jsalt19/databases/AMI/*/wav/{uri}.wav
-  BabyTrain:/export/fs01/jsalt19/databases/BabyTrain/*/wav/{uri}.wav
-  CHiME5:/export/fs01/jsalt19/databases/CHiME5/*/wav/{uri}.wav
-  SRI:/export/fs01/jsalt19/databases/SRI/*/wav/{uri}.wav
-  MUSAN:/export/fs01/jsalt19/databases/auxiliary/musan/{uri}.wav
+  AMI: /export/fs01/jsalt19/databases/AMI/*/wav/{uri}.wav
+  BabyTrain: /export/fs01/jsalt19/databases/BabyTrain/*/wav/{uri}.wav
+  CHiME5: /export/fs01/jsalt19/databases/CHiME5/*/wav/{uri}.wav
+  SRI: /export/fs01/jsalt19/databases/SRI/*/wav/{uri}.wav
+  MUSAN: /export/fs01/jsalt19/databases/auxiliary/musan/{uri}.wav
 
 # META PROTOCOL JULIEN
 Protocols:
