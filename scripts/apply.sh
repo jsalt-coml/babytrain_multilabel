@@ -39,5 +39,5 @@ if [ ! -f $MODEL_PATH ]; then
 fi
 
 source activate pyannote
-pyannote-multilabel-babytrain apply $MODEL_PATH BabyTrain.SpeakerRole.JSALT $OUTPUT_DIR
+pyannote-multilabel apply $MODEL_PATH BabyTrain.SpeakerRole.JSALT $OUTPUT_DIR
 

@@ -1,7 +1,7 @@
 # Multi-label classifier with `pyannote-audio`
 
 Train, validate and apply a multi-label classifier based on MFCCs and LSTMs, using 
-`pyannote-multilabel-babytrain` command line tool.
+`pyannote-multilabel` command line tool.
 The labels are :
 - KCHI (key children speech utterances)
 - CHI (other children speech utterances)
@@ -19,24 +19,65 @@ Databases:
       BabyTrain: /export/fs01/jsalt19/databases/BabyTrain/*/wav/{uri}.wav
       CHIME5: /export/fs01/jsalt19/databases/CHiME5/*/wav/{uri}.wav
       AMI: /export/fs01/jsalt19/databases/AMI/*/wav/{uri}.wav
+      MUSAN: /export/fs01/jsalt19/databases/auxiliary/musan/{uri}.wav
+          
+Protocols:
+   AMI:
+      SpeakerDiarization:
+         MixHeadset:
+	    train:
+	       annotation: /export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.rttm
+	       annotated: /export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.uem
+	    development:
+	       annotation: /export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.rttm
+	       annotated: /export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.uem
+	    test:
+	       annotation: /export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.rttm
+	       annotated: /export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.uem
 
+   BabyTrain:
+      SpeakerDiarization:
+         All:
+            train:
+	       annotation: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.rttm
+	       annotated: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.uem
+	    development:
+	       annotation: /export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.rttm
+	       annotated: /export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.uem
+	    test:
+	       annotation: /export/fs01/jsalt19/databases/BabyTrain/test/all_test.rttm
+	       annotated: /export/fs01/jsalt19/databases/BabyTrain/test/all_test.uem
+
+   CHiME5:
+      SpeakerDiarization:
+         U01:
+	    train:
+	       annotation: /export/fs01/jsalt19/databases/CHiME5/train/allU01_train.rttm
+	       annotated: /export/fs01/jsalt19/databases/CHiME5/train/allU01_train.uem
+	    development:
+	       annotation: /export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.rttm
+	       annotated: /export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.uem
+	    test:
+	       annotation: /export/fs01/jsalt19/databases/CHiME5/test/allU01_test.rttm
+	       annotated: /export/fs01/jsalt19/databases/CHiME5/test/allU01_test.uem
+
+# META PROTOCOL JULIEN
 Protocols:
   X:
-    SpeakerRole:
+    SpeakerDiarization:
       JSALT:
         train:
-          BabyTrain.SpeakerRole.JSALT: [train]
-          AMI.SpeakerRole.JSALT: [train]
+          BabyTrain.SpeakerDiarization.JSALT: [train]
+          AMI.SpeakerDiarization.JSALT: [train]
         development:
-          BabyTrain.SpeakerRole.JSALT: [development]
-          AMI.SpeakerRole.JSALT: [development]
+          BabyTrain.SpeakerDiarization.JSALT: [development]
+          AMI.SpeakerDiarization.JSALT: [development]
         test:
-          BabyTrain.SpeakerRole.JSALT: [test]
-          AMI.SpeakerRole.JSALT: [test]
+          BabyTrain.SpeakerDiarization.JSALT: [test]
+          AMI.SpeakerDiarization.JSALT: [test]
 ```
 
-Where `/path/to` needs to be replaced by the path to the folder containing the corpora.
-Then, we can install the needed dependencies : 
+Next, we can install the needed dependencies : 
 
 ```bash
 # Create conda environment
@@ -45,18 +86,11 @@ conda activate pyannote
 git clone https://github.com/jsalt-coml/babytrain_multilabel.git
 cd BabyTrain_multilabel
 
-# Clone forked version of pyannote-audio and pyannote-db-template
+# Clone forked version of pyannote-audio
 git clone https://github.com/jsalt-coml/pyannote-audio.git
-git clone https://github.com/jsalt-coml/pyannote-db-babytrain.git
-git clone https://github.com/jsalt-coml/pyannote-db-ami.git
-git clone https://github.com/jsalt-coml/pyannote-db-chime5.git
 
 # Install the associated local python packages
 pip install -e ./pyannote-audio
-pip install -e ./pyannote-db-babytrain
-pip install -e ./pyannote-db-ami
-pip install -e ./pyannote-db-chime5
-
 
 # tensorboard support (optional) 
 pip install tensorflow tensorboard
@@ -70,12 +104,11 @@ cd ./shennong
 conda env update -n pyannote -f environment.yml
 make install
 make test
-
 ```
 
 ## Configuration
 
-To ensure reproducibility, `pyannote-multilabel-babytrain` relies on a configuration file defining the experimental setup:
+To ensure reproducibility, `pyannote-multilabel` relies on a configuration file defining the experimental setup:
 
 ```bash
 cat babytrain/multilabel/config.yml
@@ -83,7 +116,7 @@ cat babytrain/multilabel/config.yml
 
 ```yaml
 task:
-   name: MultilabelBabyTrain
+   name: Multilabel
    params:
       duration: 2.0      # sequences are 2s long
       batch_size: 64     # 64 sequences per batch
@@ -135,8 +168,8 @@ You might want to change some of these parameters to see if performances improve
 The following command will train the network using the training set of BabyTrain database for 1000 epochs:
 
 ```bash
-EXPERIMENT_DIR=babytrain/multilabel
-pyannote-multilabel-babytrain train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerRole.JSALT
+export EXPERIMENT_DIR=babytrain/multilabel
+pyannote-multilabel train --gpu --to=1000 ${EXPERIMENT_DIR} BabyTrain.SpeakerDiarization.JSALT
 ```
 
 This will create a bunch of files in TRAIN_DIR (defined below). One can follow along the training process using tensorboard.
@@ -152,14 +185,14 @@ To get a quick idea of how the network is doing during training, one can use the
 It can (should!) be run in parallel to training and evaluates the model epoch after epoch.
 
 ```bash
-export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerRole.JSALT.train
-pyannote-multilabel-babytrain validate speech ${TRAIN_DIR} BabyTrain.SpeakerRole.JSALT
+export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerDiarization.JSALT.train
+pyannote-multilabel validate speech ${TRAIN_DIR} BabyTrain.SpeakerDiarization.JSALT
 ```
 
 In practice, it is tuning a simple speech activity detection pipeline (pyannote.audio.pipeline.speech_activity_detection.SpeechActivityDetection) for each speaker class, and after each epoch and stores the best hyper-parameter configuration on disk:
 
 ```bash
-cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerRole.JSALT/params.yml
+cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerDiarization.JSALT/params.yml
 ```
 
 ```yaml

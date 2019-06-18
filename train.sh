@@ -27,4 +27,4 @@ conda activate pyannote
 # copy database.yml in experiment folder to keep log of everything
 mkdir -p $EXPERIMENT_DIR/train/${protocol}.train
 cp -r /home/jkaradayi/.pyannote/database.yml $EXPERIMENT_DIR/train/${protocol}.train
-pyannote-multilabel-babytrain train --gpu --to=100 ${EXPERIMENT_DIR} $protocol
+pyannote-multilabel train --gpu --to=100 ${EXPERIMENT_DIR} $protocol

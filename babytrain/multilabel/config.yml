@@ -1,5 +1,5 @@
 task:
-   name: MultilabelBabyTrain
+   name: Multilabel
    params:
       duration: 2.0      # sequences are 2s long
       batch_size: 64     # 64 sequences per batch
