@@ -22,7 +22,7 @@ protocol=$2
 export EXPERIMENT_DIR=$experiment_dir
 
 # activate conda environment
-conda activate pyannote
+source activate pyannote
 
 # copy database.yml in experiment folder to keep log of everything
 mkdir -p $EXPERIMENT_DIR/train/${protocol}.train
