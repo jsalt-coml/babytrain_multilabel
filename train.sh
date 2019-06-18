@@ -1,9 +1,9 @@
 #!/bin/bash
-#$ -j y -o /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/log.txt
-#$ -e /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/err.txt
+#$ -j y -o /home/lmarvin/BabyTrain_multilabel/log.txt
+#$ -e /home/lmarvin/BabyTrain_multilabel/err.txt
 #$ -l mem_free=16G
 #$ -l ram_free=16G
-#$ -l gpu=4
+#$ -l gpu=2
 #$ -l "hostname=b1[12345678]*|c*"
 #$ -cwd
 
@@ -32,3 +32,4 @@ source activate pyannote
 mkdir -p $EXPERIMENT_DIR/train/${protocol}.train
 cp -r $HOME/.pyannote/database.yml $EXPERIMENT_DIR/train/${protocol}.train
 pyannote-multilabel train --gpu --to=100 ${EXPERIMENT_DIR} $protocol
+echo "Done"
