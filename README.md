@@ -21,7 +21,7 @@ Protocols:
         train:
           annotation: /export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.rttm
           annotated: /export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.uem
-        dev:
+        development:
           annotation: /export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.rttm
           annotated: /export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.uem
         test:
@@ -33,7 +33,7 @@ Protocols:
         train:
           annotation: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.rttm
           annotated: /export/fs01/jsalt19/databases/BabyTrain/train/all_train.uem
-        dev:
+        development:
           annotation: /export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.rttm
           annotated: /export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.uem
         test:
@@ -45,7 +45,7 @@ Protocols:
         train:
           annotation: /export/fs01/jsalt19/databases/CHiME5/train/allU01_train.rttm
           annotated: /export/fs01/jsalt19/databases/CHiME5/train/allU01_train.uem
-        dev:
+        development:
           annotation: /export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.rttm
           annotated: /export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.uem
         test:
