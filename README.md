@@ -187,7 +187,8 @@ export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerDiarization.All.train
 pyannote-multilabel validate speech ${TRAIN_DIR} BabyTrain.SpeakerDiarization.All
 ```
 
-In practice, it is tuning a simple speech activity detection pipeline (pyannote.audio.pipeline.speech_activity_detection.SpeechActivityDetection) for each speaker class, and after each epoch and stores the best hyper-parameter configuration on disk:
+One can also use the Detection Error Rate metric for validating the model by adding the flag *--use_der*
+In practice, it is tuning a simple speech activity detection pipeline (pyannote.audio.pipeline.speech_activity_detection.SpeechActivityDetection) for the specified class, and after each epoch stores the best hyper-parameter configuration on disk:
 
 ```bash
 cat ${TRAIN_DIR}/validate/BabyTrain.SpeakerDiarization.All/params.yml
