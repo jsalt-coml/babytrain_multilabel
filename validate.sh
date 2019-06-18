@@ -51,4 +51,4 @@ export TRAIN_DIR=${EXPERIMENT_DIR}/train/${protocol_train}.train
 # copy database.yml in output folder to keep trace of what was used when launching the experiment
 mkdir -p $TRAIN_DIR/validate_$CLASS
 cp -r /home/$USER/.pyannote/database.yml $TRAIN_DIR/validate_$CLASS/
-pyannote-multilabel-babytrain validate --gpu --precision=$precision --to=100 --every=5 $CLASS ${TRAIN_DIR} $protocol
+pyannote-multilabel validate --gpu --precision=$precision --to=100 --every=5 $CLASS ${TRAIN_DIR} $protocol
