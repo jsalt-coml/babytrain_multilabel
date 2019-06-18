@@ -21,7 +21,7 @@ Protocols:
         train:
           annotation:/export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.rttm
           annotated:/export/fs01/jsalt19/databases/AMI/train/allMix-Headset_train.uem
-        development:
+        dev:
           annotation:/export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.rttm
           annotated:/export/fs01/jsalt19/databases/AMI/dev/allMix-Headset_dev.uem
         test:
@@ -29,11 +29,11 @@ Protocols:
           annotated:/export/fs01/jsalt19/databases/AMI/test/allMix-Headset_test.uem
   BabyTrain:
     SpeakerDiarization:
-      All:
+      JSALT:
         train:
           annotation:/export/fs01/jsalt19/databases/BabyTrain/train/all_train.rttm
           annotated:/export/fs01/jsalt19/databases/BabyTrain/train/all_train.uem
-        development:
+        dev:
           annotation:/export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.rttm
           annotated:/export/fs01/jsalt19/databases/BabyTrain/dev/all_dev.uem
         test:
@@ -45,7 +45,7 @@ Protocols:
         train:
           annotation:/export/fs01/jsalt19/databases/CHiME5/train/allU01_train.rttm
           annotated:/export/fs01/jsalt19/databases/CHiME5/train/allU01_train.uem
-        development:
+        dev:
           annotation:/export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.rttm
           annotated:/export/fs01/jsalt19/databases/CHiME5/dev/allU01_dev.uem
         test:
@@ -67,7 +67,7 @@ Protocols:
         train:
           BabyTrain.SpeakerDiarization.JSALT: [train]
           AMI.SpeakerDiarization.JSALT: [train]
-        development:
+        dev:
           BabyTrain.SpeakerDiarization.JSALT: [development]
           AMI.SpeakerDiarization.JSALT: [development]
         test:
