@@ -8,14 +8,15 @@
 #$ -cwd
 
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
     echo "Usage :"
-    echo "./apply.sh <validate_dir> <output_dir>"
+    echo "./apply.sh <validate_dir> <protocol_name> <output_dir>"
     exit
 fi
 
 VALIDATE_DIR=$1
-OUTPUT_DIR=$2
+PROTOCOL=$2
+OUTPUT_DIR=$3
 
 if [ ! -d ${VALIDATE_DIR} ] || [ -z "$VALIDATE_DIR" ]; then
     echo "Folder \$VALIDATE_DIR = $VALIDATE_DIR doesn't exist."
@@ -39,5 +40,6 @@ if [ ! -f $MODEL_PATH ]; then
 fi
 
 source activate pyannote
-pyannote-multilabel apply $MODEL_PATH BabyTrain.SpeakerRole.JSALT $OUTPUT_DIR
+pyannote-multilabel apply --gpu $MODEL_PATH $PROTOCOL $OUTPUT_DIR
+echo "Done"
 
