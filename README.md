@@ -51,6 +51,19 @@ Protocols:
         test:
           annotation: /export/fs01/jsalt19/databases/CHiME5/test/allU01_test.rttm
           annotated: /export/fs01/jsalt19/databases/CHiME5/test/allU01_test.uem
+  X:
+    SpeakerDiarization:
+      # META PROTOCOL JULIEN
+      JSALT:
+        train:
+          BabyTrain.SpeakerDiarization.All: [train]
+          AMI.SpeakerDiarization.MixHeadset: [train]
+        dev:
+          BabyTrain.SpeakerDiarization.All: [development]
+          AMI.SpeakerDiarization.MixHeadset: [development]
+        test:
+          BabyTrain.SpeakerDiarization.All: [test]
+          AMI.SpeakerDiarization.MixHeadset: [test]
 
 Databases:
   AMI: /export/fs01/jsalt19/databases/AMI/*/wav/{uri}.wav
@@ -58,21 +71,6 @@ Databases:
   CHiME5: /export/fs01/jsalt19/databases/CHiME5/*/wav/{uri}.wav
   SRI: /export/fs01/jsalt19/databases/SRI/*/wav/{uri}.wav
   MUSAN: /export/fs01/jsalt19/databases/auxiliary/musan/{uri}.wav
-
-# META PROTOCOL JULIEN
-Protocols:
-  X:
-    SpeakerDiarization:
-      JSALT:
-        train:
-          BabyTrain.SpeakerDiarization.All: [train]
-          AMI.SpeakerDiarization.JSALT: [train]
-        dev:
-          BabyTrain.SpeakerDiarization.All: [development]
-          AMI.SpeakerDiarization.JSALT: [development]
-        test:
-          BabyTrain.SpeakerDiarization.All: [test]
-          AMI.SpeakerDiarization.JSALT: [test]
 ```
 
 Next, we can install the needed dependencies : 
