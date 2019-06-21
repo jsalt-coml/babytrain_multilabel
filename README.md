@@ -58,7 +58,7 @@ Protocols:
         train:
           BabyTrain.SpeakerDiarization.All: [train]
           AMI.SpeakerDiarization.MixHeadset: [train]
-        dev:
+        development:
           BabyTrain.SpeakerDiarization.All: [development]
           AMI.SpeakerDiarization.MixHeadset: [development]
         test:
