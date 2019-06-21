@@ -7,6 +7,9 @@
 #$ -l "hostname=b1[12345678]*|c*"
 #$ -cwd
 
+EXPERIMENT_DIR=$1
+PROTOCOL_NAME=$2
+
 if [ $# -ne 2 ]; then
     echo "Usage :"
     echo "./train_classic_SAD.sh <experiment_dir> <protocol_name>"
