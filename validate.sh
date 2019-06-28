@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
-#$ -j y -o /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/validate_log.txt
-#$ -e /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/validate_err.txt
-#$ -M marvin.lavechin@ensimag.grenoble-inp.fr
 #$ -l mem_free=10G
 #$ -l ram_free=10G
-#$ -l gpu=1
-#$ -l "hostname=b1[12345678]*|c*"
 #$ -cwd
 
 if [ $# -le 2 ]; then
@@ -39,7 +34,7 @@ if [[ ! $precision ]]; then
     precision=0.8
 fi
 
-if [[ ! $CLASS =~ ^(KCHI|CHI|FEM|MAL|speech)$ ]]; then
+if [[ ! $CLASS =~ ^(KCHI|CHI|FEM|MAL|SPEECH)$ ]]; then
     echo "The first parameter must belong to [KCHI,CHI,FEM,MAL,speech]."
     exit
 fi
@@ -51,4 +46,4 @@ export TRAIN_DIR=${EXPERIMENT_DIR}/train/${protocol_train}.train
 # copy database.yml in output folder to keep trace of what was used when launching the experiment
 mkdir -p $TRAIN_DIR/validate_$CLASS
 cp -r $HOME/.pyannote/database.yml $TRAIN_DIR/validate_$CLASS/
-pyannote-multilabel validate --gpu --precision=$precision --to=100 --every=5 $CLASS ${TRAIN_DIR} $protocol
+pyannote-multilabel validate --precision=$precision --to=100 --every=1 $CLASS ${TRAIN_DIR} $protocol
