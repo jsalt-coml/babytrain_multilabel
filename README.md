@@ -233,7 +233,7 @@ ssh c05 -L 1234:localhost:1234
 # Run tensorboard session
 cd BabyTrain_multilabel
 source activate pyannote
-tensorboard --logdir=babytrain/multilabel
+tensorboard --logdir=babytrain/multilabel --port 1234
 ```
 
 Then, go to **localhost:1234** in your favourite browser.
