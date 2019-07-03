@@ -17,10 +17,10 @@ bash ${DIR_PATH}/apply.sh $VALIDATE_DIR $PROTOCOL $OUTPUT_DIR
 
 echo "Converting .npy to .rttm"
 echo $VALIDATE_DIR
-echo ${OUTPUT_DIR}/BabyTrain
-python ${DIR_PATH}/npy_to_rttm.py --val ${VALIDATE_DIR} --protocol $PROTOCOL --scores ${OUTPUT_DIR}/BabyTrain
-find ${OUTPUT_DIR}/BabyTrain -name '*.rttm' -exec cat {} + > ${OUTPUT_DIR}/BabyTrain/all.mdtm
+echo ${OUTPUT_DIR}/$PROTOCOL
+python ${DIR_PATH}/npy_to_rttm.py --val ${VALIDATE_DIR} --protocol $PROTOCOL --scores ${OUTPUT_DIR}/$PROTOCOL
+find ${OUTPUT_DIR}/$PROTOCOL -name '*.rttm' -exec cat {} + > ${OUTPUT_DIR}/$PROTOCOL/all.mdtm
 
 echo "Computing the metrics ..."
-pyannote-metrics.py detection --subset=test $PROTOCOL ${OUTPUT_DIR}/BabyTrain/all.mdtm
+pyannote-metrics.py detection --subset=test $PROTOCOL ${OUTPUT_DIR}/$PROTOCOL/all.mdtm
 
