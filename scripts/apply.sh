@@ -20,12 +20,12 @@ OUTPUT_DIR=$3
 
 if [ ! -d ${VALIDATE_DIR} ] || [ -z "$VALIDATE_DIR" ]; then
     echo "Folder \$VALIDATE_DIR = $VALIDATE_DIR doesn't exist."
-    exit
+    exit 1
 fi
 
 if [ -d ${OUTPUT_DIR} ]; then
     echo "Folder \$OUTPUT_DIR = $OUTPUT_DIR already exists ! Please delete it."
-    exit
+    exit 1
 fi
 
 BEST_EPOCH=$(cat ${VALIDATE_DIR}/*.development/params.yml | grep -oP 'epoch: \K[0-9]{1,4}')
@@ -40,6 +40,10 @@ if [ ! -f $MODEL_PATH ]; then
 fi
 
 source activate pyannote
-pyannote-multilabel apply --gpu $MODEL_PATH $PROTOCOL $OUTPUT_DIR
+echo $MODEL_PATH
+echo $PROTOCOL
+echo $OUTPUT_DIR
+
+pyannote-multilabel apply $MODEL_PATH $PROTOCOL $OUTPUT_DIR
 echo "Done"
 

@@ -52,17 +52,33 @@ elif "MAL" in folder_name:
 elif "FEM" in folder_name:
     print("Extracting female speech.")
     mode = "FEM"
-elif "speech" in folder_name:
+elif "SPEECH" in folder_name:
     print("Extracting speech.")
-    mode = "speech"
+    mode = "SPEECH"
 else:
     raise ValueError("Can't decide what label needs to be predicted : "
                      "%s should contain one of the following "
-                     "[KCHI,CHI,FEM,MAL,speech]" % folder_name)
+                     "[KCHI,CHI,FEM,MAL,SPEECH]" % folder_name)
 
-# numpy array for being able to index by list of indices
+# Let's look for the config file to see if it is
+# the number of classes
+config_file = glob.glob('%s/**/config.yml' % '/'.join(validation_dir.split("/")[0:2]), recursive=True)
+
 labels = np.asarray(["CHI", "FEM", "KCHI", "MAL"])
+if len(config_file) != 1:
+    raise ValueError("Something went wrong while looking for the config.yml file :\nFiles found : %s" % config_file)
+else:
+    config_file = config_file[0]
+    config = yaml.load(open(config_file))
+    if "speech" in config["task"]["params"] and config["task"]["params"]["speech"]:
+        labels = np.append(labels, "SPEECH")
+    if "overlap" in config["task"]["params"] and config["task"]["params"]["overlap"]:
+        labels = np.append(labels, "OVERLAP")
 
+PROTOCOL_TRAIN = validation_dir.split('/')[-2]
+if "AMI" in PROTOCOL_TRAIN or "CHiME5" in PROTOCOL_TRAIN:
+    labels = np.delete(labels, np.where(labels == ["KCHI", "CHI"]))
+labels = list(labels)
 # Read treshold
 params = yaml.load(open(os.path.join(validation_dir,
                         "{}.development".format(args.protocol),
@@ -76,15 +92,24 @@ npy_files = glob.glob(os.path.join(args.scores, "*.npy"))
 if len(list(npy_files)) == 0:
     print("No .npy files have been found.")
 
+output_dir = os.path.join(args.scores, mode)
+try:
+    # Create target Directory
+    os.mkdir(output_dir)
+    print("Directory ", output_dir, " created ")
+except FileExistsError:
+    print("Directory ", output_dir, " already exists")
+
 for npy in npy_files:
     print("Treating %s " % os.path.basename(npy))
-    output_file = npy.replace(".npy", ".rttm")
+    output_file = os.path.join(output_dir, os.path.basename(npy).replace(".npy", ".rttm"))
     basename = os.path.basename(output_file).replace(".rttm", "")
     role_scores = np.load(npy)
-    if mode == "speech":
+
+    if mode == "SPEECH" and "SPEECH" not in labels:
         speech_scores = np.sum(role_scores, axis=1)
     else:
-        idx = labels.index()
+        idx = labels.index(mode)
         speech_scores = role_scores[:, idx]
 
     is_speech = speech_scores > treshold
