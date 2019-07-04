@@ -10,6 +10,8 @@ VALIDATE_DIR=$1
 PROTOCOL=$2
 OUTPUT_DIR=$3
 
+RTTM_FOLDER=`echo $PROTOCOL | cut -d . -f 1`
+
 DIR_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"/scripts
 
 echo "Applying the model"
@@ -17,10 +19,10 @@ bash ${DIR_PATH}/apply.sh $VALIDATE_DIR $PROTOCOL $OUTPUT_DIR
 
 echo "Converting .npy to .rttm"
 echo $VALIDATE_DIR
-echo ${OUTPUT_DIR}/$PROTOCOL
-python ${DIR_PATH}/npy_to_rttm.py --val ${VALIDATE_DIR} --protocol $PROTOCOL --scores ${OUTPUT_DIR}/$PROTOCOL
-find ${OUTPUT_DIR}/$PROTOCOL -name '*.rttm' -exec cat {} + > ${OUTPUT_DIR}/$PROTOCOL/all.mdtm
+echo ${OUTPUT_DIR}/$RTTM_FOLDER
+python ${DIR_PATH}/npy_to_rttm.py --val ${VALIDATE_DIR} --protocol $PROTOCOL --scores ${OUTPUT_DIR}/$RTTM_FOLDER
+find ${OUTPUT_DIR}/$RTTM_FOLDER -name '*.rttm' -exec cat {} + > ${OUTPUT_DIR}/$RTTM_FOLDER/all.mdtm
 
 echo "Computing the metrics ..."
-pyannote-metrics.py detection --subset=test $PROTOCOL ${OUTPUT_DIR}/$PROTOCOL/all.mdtm
+pyannote-metrics.py detection --subset=test $PROTOCOL ${OUTPUT_DIR}/$RTTM_FOLDER/all.mdtm
 

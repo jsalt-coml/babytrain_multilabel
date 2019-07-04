@@ -212,7 +212,8 @@ Once the thresholds have been computed in the validation step, we can apply our 
 ```
 export VALIDATE_DIR=${TRAIN_DIR}/validate_speech
 export OUTPUT_DIR=my_sad_output
-./apply_and_evaluate.sh $VALIDATE_DIR $OUTPUT_DIR
+export PROTOCOL=BabyTrain.SpeakerDiarization.All
+./apply_and_evaluate.sh $VALIDATE_DIR $PROTOCOL $OUTPUT_DIR
 ```
 
 This script will produce the raw scores in the $OUTPUT_DIR folder, then it will create the .rttm by applying the thresholds on these scores.
