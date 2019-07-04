@@ -12,7 +12,7 @@ OUTPUT_DIR=$3
 
 RTTM_FOLDER=`echo $PROTOCOL | cut -d . -f 1`
 
-DIR_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"/scripts
+DIR_PATH=$PWD/scripts
 
 echo "Applying the model"
 bash ${DIR_PATH}/apply.sh $VALIDATE_DIR $PROTOCOL $OUTPUT_DIR
