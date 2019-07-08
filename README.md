@@ -218,7 +218,7 @@ export PROTOCOL=BabyTrain.SpeakerDiarization.All
 
 This script will produce the raw scores in the $OUTPUT_DIR folder, then it will create the .rttm by applying the thresholds on these scores.
 Finally, it will compute the detection error rate by using pyannote-metrics.
-Based on which task (speech, KCHI, CHI, FEM or MAL) the model has been optimized for, the model will predict only the relevant class. 
+Based on which task (SPEECH, KCHI, CHI, FEM or MAL) the model has been optimized for, the model will predict only the relevant class. 
 
 
 ## Tensorboard
@@ -258,7 +258,7 @@ Submit the script validate.sh :
 qsub validate.sh KCHI
 ```
 
-where the second parameter can be chosen in {KCHI, CHI, FEM, MAL, speech} depending on whether you want to evaluate
+where the second parameter can be chosen in {KCHI, CHI, FEM, MAL, SPEECH} depending on whether you want to evaluate
 the model on a specific class, or as a speech activity detection model.
 
 ## References
