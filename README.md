@@ -182,7 +182,7 @@ It can (should!) be run in parallel to training and evaluates the model epoch af
 
 ```bash
 export TRAIN_DIR=${EXPERIMENT_DIR}/train/BabyTrain.SpeakerDiarization.All.train
-pyannote-multilabel validate speech ${TRAIN_DIR} BabyTrain.SpeakerDiarization.All
+pyannote-multilabel validate SPEECH ${TRAIN_DIR} BabyTrain.SpeakerDiarization.All
 ```
 
 One can also use the Detection Error Rate metric for validating the model by adding the flag *--use_der*
