@@ -1,0 +1,47 @@
+task:
+   name: Multilabel
+   params:
+      duration: 2.0      # sequences are 2s long
+      batch_size: 32     # 64 sequences per batch
+      per_epoch: 1       # one epoch = 1 day of audio
+      speech: True
+
+data_augmentation:
+   name: AddNoise                                   # add noise on-the-fly
+   params:
+      snr_min: 0                                   # using random signal-to-noise
+      snr_max: 25                                   # ratio between 10 and 20 dBs
+      collection: MUSAN.Collection.BackgroundNoise  # use background noise from MUSAN
+      scheduler: Linear
+      max_epoch: 100
+
+feature_extraction:
+  name: LibrosaMelSpectrogram
+  params:
+      sample_rate: 16000
+      step: 0.01
+      duration: 0.025
+      n_mels: 128
+      spec_augment: True
+      frequency_masking_para: 27                                    # Frequency mapping parameter
+      time_masking_para: 100                                        # Time masking parameter
+      nb_frequency_masks: 1                                         # Number of frequency masks
+      nb_time_masks: 1                                              # Number of time masks
+      scheduler: Linear
+      max_epoch: 100
+
+architecture:
+   name: ConvRNN
+   params:
+      instance_normalize: True  # normalize sequences
+      rnn: LSTM                 # use LSTM (could be GRU)
+      recurrent: [128, 128]     # two layers with 128 hidden states
+      bidirectional: True       # bidirectional LSTMs
+      linear: [32, 32]          # add two linear layers at the end
+      kernel_size: 32
+
+scheduler:
+   name: CyclicScheduler        # use cyclic learning rate (LR) scheduler
+   params:
+      learning_rate: auto       # automatically guess LR upper bound
+      epochs_per_cycle: 14      # 14 epochs per cycle
