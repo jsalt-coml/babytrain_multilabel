@@ -154,6 +154,10 @@ scheduler:
    params:
       learning_rate: auto       # automatically guess LR upper bound
       epochs_per_cycle: 14      # 14 epochs per cycle
+      
+preprocessors:
+    annotation:
+       name: pyannote.audio.features.GenderChiMapper
 ```
 
 You might want to change some of these parameters to see if performances improve.

@@ -39,12 +39,12 @@ if [[ ! $CLASS =~ ^(KCHI|CHI|FEM|MAL|SPEECH)$ ]]; then
     exit
 fi
 
-#echo "Began at $(date)"
-#export CUDA_VISIBLE_DEVICES=`free-gpu`
-#echo "Found GPU : $CUDA_VISIBLE_DEVICES"
+echo "Began at $(date)"
+export CUDA_VISIBLE_DEVICES=0
+echo "Found GPU : $CUDA_VISIBLE_DEVICES"
 
 source activate pyannote
 export EXPERIMENT_DIR=$experiment_dir
 export TRAIN_DIR=${EXPERIMENT_DIR}/train/${protocol_train}.train
 
-pyannote-multilabel validate --every=1 $CLASS ${TRAIN_DIR} $protocol --use_der --batch 16
+pyannote-multilabel validate --gpu --every=1 $CLASS ${TRAIN_DIR} $protocol --use_der

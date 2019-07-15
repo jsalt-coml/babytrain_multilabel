@@ -4,7 +4,7 @@ task:
       duration: 2.0      # sequences are 2s long
       batch_size: 64     # 64 sequences per batch
       per_epoch: 1       # one epoch = 1 day of audio
-      weighted_loss: True # weight loss by 1/prior 
+      speech: True
 
 data_augmentation:
    name: AddNoise                                   # add noise on-the-fly
@@ -40,3 +40,7 @@ scheduler:
    params:
       learning_rate: auto       # automatically guess LR upper bound
       epochs_per_cycle: 14      # 14 epochs per cycle
+
+preprocessors:
+    annotation:
+      name: pyannote.audio.features.GenderChiMapper
