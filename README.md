@@ -45,6 +45,7 @@ Protocols:
         train:
           annotation: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/train/all_train.rttm
           annotated: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/train/all_train.uem
+          uris: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/train/male_20h.txt
         development:
           annotation: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/dev/all_dev.rttm
           annotated: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/dev/all_dev.uem
