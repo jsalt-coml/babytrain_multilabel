@@ -39,6 +39,18 @@ Protocols:
         test:
           annotation: /export/fs01/jsalt19/databases/BabyTrain/test/all_test.rttm
           annotated: /export/fs01/jsalt19/databases/BabyTrain/test/all_test.uem
+  VoxCeleb:
+    SpeakerDiarization:
+      MaleAugmentation:
+        train:
+          annotation: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/train/all_train.rttm
+          annotated: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/train/all_train.uem
+        development:
+          annotation: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/dev/all_dev.rttm
+          annotated: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/dev/all_dev.uem
+        test:
+          annotation: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/test/all_test.rttm
+          annotated: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/test/all_test.uem
   CHiME5:
     SpeakerDiarization:
       U01:
@@ -57,6 +69,7 @@ Protocols:
       JSALT:
         train:
           BabyTrain.SpeakerDiarization.All: [train]
+          VoxCeleb.SpeakerDiarization.MaleAugmentation: [train]
           AMI.SpeakerDiarization.MixHeadset: [train]
         development:
           BabyTrain.SpeakerDiarization.All: [development]
@@ -68,6 +81,7 @@ Protocols:
 Databases:
   AMI: /export/fs01/jsalt19/databases/AMI/*/wav/{uri}.wav
   BabyTrain: /export/fs01/jsalt19/databases/BabyTrain/*/wav/{uri}.wav
+  VoxCeleb: /export/fs01/jsalt19/databases/auxiliary/VoxCeleb/train/wav/{uri}.wav
   CHiME5: /export/fs01/jsalt19/databases/CHiME5/*/wav/{uri}.wav
   SRI: /export/fs01/jsalt19/databases/SRI/*/wav/{uri}.wav
   MUSAN: /export/fs01/jsalt19/databases/auxiliary/musan/{uri}.wav
