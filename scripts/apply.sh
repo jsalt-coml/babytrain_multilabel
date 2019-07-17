@@ -1,22 +1,23 @@
 #!/bin/bash
-#$ -j y -o /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/validate_log.txt
-#$ -e /home/lmarvin/BabyTrain_multilabel/babytrain/multilabel/validate_err.txt
+#$ -j y
 #$ -l mem_free=10G
 #$ -l ram_free=10G
 #$ -l gpu=1
 #$ -l "hostname=b1[12345678]*|c*"
 #$ -cwd
 
+source ~/.bashrc
 
-if [ $# -ne 3 ]; then
+if [ $# -ne 4 ]; then
     echo "Usage :"
-    echo "./apply.sh <validate_dir> <protocol_name> <output_dir>"
+    echo "./apply.sh <validate_dir> <protocol_name> <subset> <output_dir>"
     exit
 fi
 
 VALIDATE_DIR=$1
 PROTOCOL=$2
-OUTPUT_DIR=$3
+SUBSET=$3
+OUTPUT_DIR=$4
 
 if [ ! -d ${VALIDATE_DIR} ] || [ -z "$VALIDATE_DIR" ]; then
     echo "Folder \$VALIDATE_DIR = $VALIDATE_DIR doesn't exist."
@@ -39,11 +40,5 @@ if [ ! -f $MODEL_PATH ]; then
     exit
 fi
 
-source activate pyannote
-echo $MODEL_PATH
-echo $PROTOCOL
-echo $OUTPUT_DIR
-
-pyannote-multilabel apply $MODEL_PATH $PROTOCOL $OUTPUT_DIR
-echo "Done"
-
+conda activate pyannote
+pyannote-multilabel apply --subset=$SUBSET $MODEL_PATH $PROTOCOL $OUTPUT_DIR
