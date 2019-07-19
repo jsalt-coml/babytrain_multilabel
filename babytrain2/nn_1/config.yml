@@ -1,0 +1,49 @@
+task:
+   name: Multilabel
+   params:
+      duration: 2.0     # sequences are 2s long
+      batch_size: 16     # 64 sequences per batch
+      per_epoch: 1       # one epoch = 1 day of audio
+      speech: True
+
+data_augmentation:
+   name: AddNoiseFromGaps                                # add noise on-the-fly
+   params:
+      snr_min: 5                                   # using random signal-to-noise
+      snr_max: 25                                   # ratio between 10 and 20 dBs
+      protocol: BabyTrain.SpeakerDiarization.All
+      db_yml: /home/acrsta/.pyannote/database.yml
+      scheduler: Linear
+      max_epoch: 100
+
+feature_extraction:
+  name: LibrosaMelSpectrogram
+  params:
+      sample_rate: 16000
+      step: 0.010
+      duration: 0.05
+      n_mels: 128
+      spec_augment: True
+      scheduler: Linear
+      max_epoch: 100
+
+architecture:
+   name: ConvRNN
+   params:
+      rnn: LSTM                 # use LSTM (could be GRU)
+      recurrent: [128, 128]     # two layers with 128 hidden states
+      bidirectional: True       # bidirectional LSTMs
+      linear: [32, 32]          # add two linear layers at the end
+      conv_out: [128]
+      kernel_size: [32]
+      norm: batch
+
+scheduler:
+   name: CyclicScheduler        # use cyclic learning rate (LR) scheduler
+   params:
+      learning_rate: auto       # automatically guess LR upper bound
+      epochs_per_cycle: 14      # 14 epochs per cycle
+
+preprocessors:
+    annotation:
+       name: pyannote.audio.features.GenderChiMapper
