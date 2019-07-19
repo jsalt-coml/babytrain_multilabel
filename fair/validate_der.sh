@@ -44,7 +44,7 @@ source activate pyannote
 export EXPERIMENT_DIR=$experiment_dir
 export TRAIN_DIR=${EXPERIMENT_DIR}/train/${protocol_train}.train
 
-pyannote-multilabel validate --every=1 $CLASS ${TRAIN_DIR} $protocol --use_der
+pyannote-multilabel validate --parallel=2 --every=1 $CLASS ${TRAIN_DIR} $protocol --use_der
 
 echo "End at $(date)"
 echo "Done"
