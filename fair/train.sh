@@ -30,7 +30,8 @@ source activate pyannote
 # copy database.yml in experiment folder to keep log of everything
 mkdir -p $EXPERIMENT_DIR/train/${protocol}.train
 cp -r $HOME/.pyannote/database.yml $EXPERIMENT_DIR/train/${protocol}.train
-pyannote-multilabel train --gpu --to=500 ${EXPERIMENT_DIR} $protocol
+echo $EXPERIMENT_DIR
+pyannote-multilabel train --gpu --to=1000 ${EXPERIMENT_DIR} $protocol
 
 echo "End at $(date)"
 echo "Done"
