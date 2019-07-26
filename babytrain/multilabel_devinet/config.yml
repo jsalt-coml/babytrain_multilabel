@@ -31,18 +31,16 @@ feature_extraction:
       max_epoch: 100
 
 architecture:
-   name: ConvRNN
-   params:
-     name: pyannote.models.DeviNet
-       params:
-         conv_blocks: 3
-         conv_channels: 128
-         layers_pooling: [2, 2, 2 ,2]
-         final_pooling: 4
-         dropout: 0.3
-         recurrent: [128]
-         gated_rnn: True
-         linear_layers: [32, 32]
+  name: pyannote.models.DeviNet
+     params:
+       conv_blocks: 3
+       conv_channels: 128
+       layers_pooling: [2, 2, 2 ,2]
+       final_pooling: 4
+       dropout: 0.3
+       recurrent: [128]
+       gated_rnn: True
+       linear_layers: [32, 32]
 
 scheduler:
    name: CyclicScheduler        # use cyclic learning rate (LR) scheduler
